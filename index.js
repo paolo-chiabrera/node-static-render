@@ -7,6 +7,7 @@ const config  = require('./config').get();
 
 const Nightmare = require('nightmare');
 const get = require('lodash/get');
+const isEmpty = require('lodash/isEmpty');
 
 /*
 * define cache
@@ -64,8 +65,8 @@ server.get('/render/:url', cache(config.cache.duration), (req, res, next) => {
   const url = get(req, 'params.url');
   const waitForSelector = get(req, 'query.waitForSelector', 'body');
 
-  if (!url) {
-    res.send(500, 'no url provided');
+  if (isEmpty(url)) {
+    res.send(500, 'url is empty');
     next();
     return;
   }
@@ -80,7 +81,8 @@ server.get('/render/:url', cache(config.cache.duration), (req, res, next) => {
   .then(content => {
     res.writeHead(200, {
       'Content-Length': Buffer.byteLength(content),
-      'Content-Type': 'text/html'
+      'Content-Type': 'text/html',
+      'node-static-render': true
     });
     res.write(content);
     res.end();
