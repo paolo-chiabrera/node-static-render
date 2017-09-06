@@ -1,0 +1,21 @@
+{
+  "name": "node-static-render",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/paolo-chiabrera/node-static-render.git",
+  "author": "=paolo.chiabrera <=paolo.chiabrera@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "pm2 start ecosystem.config.js && pm2 logs"
+  },
+  "dependencies": {
+    "apicache": "^0.10.0",
+    "convict": "^4.0.0",
+    "lodash": "^4.17.4",
+    "morgan": "^1.8.2",
+    "nightmare": "^2.10.0",
+    "pm2": "^2.6.1",
+    "redis": "^2.8.0",
+    "restify": "^5.2.0"
+  }
+}
