@@ -71,7 +71,7 @@ server.get('/render/:url', cache(config.cache.duration), (req, res, next) => {
     return;
   }
 
-  const nightmare = Nightmare();
+  const nightmare = Nightmare({ show: false });
 
   nightmare
   .goto(url)

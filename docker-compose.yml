@@ -1,0 +1,26 @@
+version: '2'
+services:
+  node-static-render:
+    build: .
+    environment:
+      - DEBUG=nightmare
+      - PORT=9000
+      - NODE_REDIS_ENABLED=true
+      - NODE_REDIS_HOST=node-redis
+    depends_on:
+      - node-redis
+    networks:
+      - node-static-render-network
+    ports:
+      - '9000:9000'
+    restart: always
+  node-redis:
+    image: 'redis:latest'
+    networks:
+      - node-static-render-network
+    ports:
+      - '6379:6379'
+    restart: always
+networks:
+  node-static-render-network:
+    driver: bridge
