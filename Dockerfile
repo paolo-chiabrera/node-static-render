@@ -42,4 +42,4 @@ ADD . /home/app
 
 WORKDIR /home/app
 
-CMD yarn run start
+CMD xvfb-run node cluster.js

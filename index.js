@@ -6,8 +6,6 @@ const pckg = require('./package');
 const config  = require('./config').get();
 
 const Nightmare = require('nightmare');
-const get = require('lodash/get');
-const isEmpty = require('lodash/isEmpty');
 
 /*
 * define cache
@@ -57,25 +55,24 @@ server.use(morgan('short'));
 * define routes
 */
 server.get('/', (req, res, next) => {
+  const url = req.header('static-render-url');
+  const selector = req.header('static-render-selector', 'body');
+  
+  if (url) {
+    getContent(url, selector, res, next);
+    return;
+  }
+
   res.json(appInfo);
   next();
 });
 
-server.get('/:url', cache(config.cache.duration), (req, res, next) => {
-  const url = get(req, 'params.url');
-  const waitForSelector = get(req, 'query.waitForSelector', 'body');
-
-  if (isEmpty(url)) {
-    res.send(500, 'url is empty');
-    next();
-    return;
-  }
-
+function getContent(url, selector, res, next) {
   const nightmare = Nightmare({ show: false });
 
   nightmare
   .goto(url)
-  .wait(waitForSelector)
+  .wait(selector)
   .evaluate(() => document.documentElement.innerHTML)
   .end()
   .then(content => {
@@ -93,7 +90,7 @@ server.get('/:url', cache(config.cache.duration), (req, res, next) => {
     res.send(500, error);
     next();
   });
-});
+}
 
 /*
 * start server
