@@ -61,7 +61,7 @@ server.get('/', (req, res, next) => {
   next();
 });
 
-server.get('/render/:url', cache(config.cache.duration), (req, res, next) => {
+server.get('/:url', cache(config.cache.duration), (req, res, next) => {
   const url = get(req, 'params.url');
   const waitForSelector = get(req, 'query.waitForSelector', 'body');
 

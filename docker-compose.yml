@@ -7,6 +7,7 @@ services:
       - PORT=9000
       - NODE_REDIS_ENABLED=true
       - NODE_REDIS_HOST=node-redis
+      - NODE_ENV=production
     depends_on:
       - node-redis
     networks:
@@ -19,7 +20,7 @@ services:
     networks:
       - node-static-render-network
     ports:
-      - '6379:6379'
+      - '6379'
     restart: always
 networks:
   node-static-render-network:
