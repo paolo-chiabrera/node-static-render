@@ -2,6 +2,8 @@ FROM node:8
 
 MAINTAINER Paolo Chiabrera <paolo.chiabrera@gmail.com>
 
+ENV NODE_ENV=production
+
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd --system nightmare && useradd --system --create-home --gid nightmare nightmare
 
